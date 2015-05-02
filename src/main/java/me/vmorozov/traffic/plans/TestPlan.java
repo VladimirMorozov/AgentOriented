@@ -1,5 +1,9 @@
 package me.vmorozov.traffic.plans;
 
+import java.util.Collections;
+
+import me.vmorozov.traffic.simulation.Intersection;
+import me.vmorozov.traffic.simulation.Simulation;
 import jadex.bdiv3.annotation.Belief;
 import jadex.bdiv3.annotation.Plan;
 import jadex.bdiv3.annotation.PlanAPI;
@@ -30,6 +34,11 @@ public class TestPlan {
 	@PlanBody
 	public void hello() {
 		System.out.println("hi one");
+		Simulation.createTestSimulation();
+		Simulation.simulate(Collections.EMPTY_LIST);
+		Intersection intersection = Simulation.getIntersectionByName("main intersection");
+		intersection.switchToAuto();
+		System.out.println("switch done");
 		planApi.waitFor(10000).get();
 		System.out.println("hi two");
 	}
