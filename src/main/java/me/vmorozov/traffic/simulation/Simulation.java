@@ -9,6 +9,7 @@ public class Simulation {
 	
 	private static List<SimulatedObject> simulatedObjects = new ArrayList<SimulatedObject>();
 	private static int time;
+	private static Waypoint startingWaypoint;
 	
 	private static Map<String, Intersection> intersections = new HashMap<String, Intersection>();
 	
@@ -60,6 +61,8 @@ public class Simulation {
 		intersections.put("second intersection", second);
 		intersections.put("third intersection", third);
 		
+		startingWaypoint = main.getLeftIncoming();
+		
 		third.getRightOutgoing().connectByDistance(main.getLeftIncoming());
 		main.getLeftOutgoing().connectByDistance(third.getRightIncoming());
 		
@@ -95,6 +98,10 @@ public class Simulation {
 		for (SimulatedObject simObject : simulatedObjects) {
 			simObject.simulationTick();
 		}
+	}
+	
+	public static synchronized Waypoint getStartingWaypoint() {
+		return startingWaypoint;
 	}
 
 }

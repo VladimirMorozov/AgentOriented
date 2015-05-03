@@ -46,4 +46,22 @@ public class Car extends SimulatedObject {
 		}
 	}
 
+	public Waypoint getLocation() {
+		return location;
+	}
+
+	public void setLocation(Waypoint location) {
+		this.location = location;
+	}
+
+	public Way getCurrentDestination() {
+		return currentDestination;
+	}
+
+	public void setCurrentDestination(Way currentDestination) {
+		this.currentDestination = currentDestination;
+	}
+	
+	
+
 }
