@@ -19,9 +19,21 @@ public class Car extends SimulatedObject {
 	@Override
 	public void tick() {
 		System.out.println("Car tick");
+		if (currentDestination instanceof WayWithTrafficLight) {
+			Simulation.getIntersectionByWayId(currentDestination.getId()).allowUrgentPassageOnWay(currentDestination.getId());
+		}
 		boolean hasMoved = currentDestination.tryMoveThroughBy(this);
-		System.out.println("moving: " + hasMoved);
+		
+		if (currentDestination instanceof WayWithTrafficLight) {
+			System.out.println("moving through intersection: " + hasMoved);
+		} else {
+			System.out.println("moving by road");
+		}
+
 		if (hasMoved) {
+			if (currentDestination instanceof WayWithTrafficLight) {
+				Simulation.getIntersectionByWayId(currentDestination.getId()).endUrgentPassage();
+			}
 			location = currentDestination.to;
 			System.out.println("car moved to: " + location.getName());
 			if (location.ways.size() == 0) {

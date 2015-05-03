@@ -1,17 +1,47 @@
 package me.vmorozov.traffic.simulation;
 
-import java.util.Arrays;
 import java.util.List;
-
-import org.bouncycastle.crypto.RuntimeCryptoException;
 
 public class Intersection {
 	
-	private List<SignalPhase> signalCycle;
+	protected List<SignalPhase> signalCycle;
 	protected String name;
 	
-	public void allowUrgentPassageOnWay(Way way) {
-		//throw new RuntimeException("Unimplemented");
+	public boolean hasWay(int wayId) {
+		for (SignalPhase signalPhase : signalCycle) {
+			if (signalPhase.controlsWay(wayId)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void allowUrgentPassageOnWay(int wayId) {
+
+		SignalPhase wayControllingPhase = null;
+		for (SignalPhase signalPhase : signalCycle) {
+			if (signalPhase.controlsWay(wayId)) {
+				wayControllingPhase = signalPhase;
+				wayControllingPhase.keepGreen();
+			}
+		}
+		
+		if (wayControllingPhase == null) {
+			throw new RuntimeException("passage requested on unknown way");
+		}
+		
+		for (SignalPhase signalPhase : signalCycle) {
+			if (signalPhase != wayControllingPhase) {
+				signalPhase.endInFavorOf(wayControllingPhase);
+			}
+		}
+
+	}
+	
+	public void endUrgentPassage() {
+		for (SignalPhase signalPhase : signalCycle) {
+			signalPhase.switchToNormal();
+		}
 	}
 	
 	public void switchToAuto() {
@@ -23,6 +53,15 @@ public class Intersection {
 	}
 	
 	
+	
+	public List<SignalPhase> getSignalCycle() {
+		return signalCycle;
+	}
+
+	public void setSignalCycle(List<SignalPhase> signalCycle) {
+		this.signalCycle = signalCycle;
+	}
+
 	@Override
 	public String toString() {
 		return "[Intersection: " + name + "]";

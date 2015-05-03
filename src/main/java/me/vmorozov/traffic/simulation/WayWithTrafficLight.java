@@ -8,7 +8,7 @@ public class WayWithTrafficLight extends Way {
 	public WayWithTrafficLight(Waypoint to) {
 		super(to);
 	}
-
+	
 	private TrafficLight trafficLight;
 
 	private Queue<Car> trafficLightQueue = new LinkedList<Car>();

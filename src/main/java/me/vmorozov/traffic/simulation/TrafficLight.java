@@ -8,6 +8,15 @@ public class TrafficLight {
 	private Signal signal = Signal.RED;
 	private List<WayWithTrafficLight> controlledWays = new ArrayList<WayWithTrafficLight>();
 	
+	public boolean controlsWay(int wayId) {
+		for (WayWithTrafficLight way : controlledWays) {
+			if (way.getId() == wayId) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public int getCongestion() {
 		int result = 0;
 		for (WayWithTrafficLight way : controlledWays) {

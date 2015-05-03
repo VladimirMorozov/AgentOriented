@@ -37,7 +37,7 @@ public class TestPlan {
 		Simulation.createTestSimulation();
 		Simulation.simulate(Collections.EMPTY_LIST);
 		Intersection intersection = Simulation.getIntersectionByName("main intersection");
-		intersection.switchToAuto();
+		intersection.allowUrgentPassageOnWay(1);
 		System.out.println("switch done");
 		planApi.waitFor(10000).get();
 		System.out.println("hi two");

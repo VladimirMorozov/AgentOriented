@@ -75,6 +75,16 @@ public class Simulation {
 		return main;
 	}
 	
+	public static Intersection getIntersectionByWayId(int wayId) {
+		for (Intersection intersection : intersections.values()) {
+			if (intersection.hasWay(wayId)) {
+				return intersection;
+			}
+		}
+		throw new RuntimeException("way doesnt belong to any of intersections");
+		
+	}
+	
 	public static synchronized Intersection getIntersectionByName(String name) {
 		return intersections.get(name);
 	}

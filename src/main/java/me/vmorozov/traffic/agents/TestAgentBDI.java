@@ -7,7 +7,10 @@ import jadex.bdiv3.annotation.Body;
 import jadex.bdiv3.annotation.Plan;
 import jadex.bdiv3.annotation.Plans;
 import jadex.micro.annotation.Agent;
+import jadex.micro.annotation.AgentArgument;
 import jadex.micro.annotation.AgentBody;
+import jadex.micro.annotation.Argument;
+import jadex.micro.annotation.Arguments;
 import jadex.micro.annotation.Description;
 
 /**
@@ -18,7 +21,14 @@ import jadex.micro.annotation.Description;
 @Agent
 @Description("This is stupid")
 @Plans(@Plan(body=@Body(TestPlan.class)))
+@Arguments({
+	  @Argument(name="intersectionName", clazz=String.class, defaultvalue="\"nerd\"", description="The keyword to react to."),
+	  @Argument(name="reply", clazz=String.class, defaultvalue="\"Watch your language\"", description="The reply message.")
+})
 public class TestAgentBDI  {
+	
+	@AgentArgument
+	private String intersectionName;
 	
 	@Belief
 	private boolean someBelief = true;

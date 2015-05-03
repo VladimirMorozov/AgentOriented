@@ -1,6 +1,8 @@
 package me.vmorozov.traffic.simulation;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class SimpleIntersection extends Intersection{
 	
@@ -46,6 +48,9 @@ public class SimpleIntersection extends Intersection{
 		SignalPhase topBottomPhase = new SignalPhase(20, 0, Signal.RED, Arrays.asList(topLight, bottomLight), "top-bottom phase of " + name);
 		leftRightPhase.setNextPhase(topBottomPhase);
 		topBottomPhase.setNextPhase(leftRightPhase);
+		List<SignalPhase> signalCycle = new ArrayList<SignalPhase>();
+		signalCycle.add(leftRightPhase);
+		signalCycle.add(topBottomPhase);
 		
 		leftRightPhase.setActive(true);
 		
@@ -55,7 +60,7 @@ public class SimpleIntersection extends Intersection{
 		return new SimpleIntersection(rightOutgoing, right, 
 				leftOutgoing, left, 
 				topOutgoing, top, 
-				bottomOutgoing, bottom);
+				bottomOutgoing, bottom, signalCycle);
 	}
 	
 	public static SimpleIntersection createSimpleWithConnection(SimpleIntersection connectTo, String name) {
@@ -70,7 +75,7 @@ public class SimpleIntersection extends Intersection{
 	public SimpleIntersection(Waypoint rightOutgoing, Waypoint rightIncoming,
 			Waypoint leftOutgoing, Waypoint leftIncoming, Waypoint topOutgoing,
 			Waypoint topIncoming, Waypoint bottomOutgoing,
-			Waypoint bottomIncoming) {
+			Waypoint bottomIncoming, List<SignalPhase> signalCycle) {
 		super();
 		this.rightOutgoing = rightOutgoing;
 		this.rightIncoming = rightIncoming;
@@ -80,6 +85,7 @@ public class SimpleIntersection extends Intersection{
 		this.topIncoming = topIncoming;
 		this.bottomOutgoing = bottomOutgoing;
 		this.bottomIncoming = bottomIncoming;
+		this.signalCycle = signalCycle;
 	}
 
 	public Waypoint getRightOutgoing() {

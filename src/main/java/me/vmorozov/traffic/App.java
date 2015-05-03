@@ -21,5 +21,7 @@ public class App
     	ArrayList<SimulatedObject> test = new ArrayList<SimulatedObject>();
     	test.add(new Car(main.getLeftIncoming()));
         Simulation.simulate(test);
+        
+        Simulation.getIntersectionByName("main intersection").allowUrgentPassageOnWay(1);
     }
 }
