@@ -19,7 +19,7 @@ import jadex.micro.annotation.Description;
  *
  */
 @Agent
-@Description("This is stupid")
+@Description("This is stupid2")
 @Plans(@Plan(body=@Body(TestPlan.class)))
 @Arguments({
 	  @Argument(name="intersectionName", clazz=String.class, defaultvalue="\"nerd\"", description="The keyword to react to."),
@@ -38,6 +38,7 @@ public class TestAgentBDI  {
 	
 	@AgentBody
 	public void body() {
+            System.out.println("Hello world!");
 		agentApi.adoptPlan(new TestPlan());
 		agentApi.waitForDelay(1000).get();
 		someBelief = false;
